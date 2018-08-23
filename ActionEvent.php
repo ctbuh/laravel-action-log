@@ -3,6 +3,7 @@
 namespace ctbuh\ActionLog;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class ActionEvent extends Model {
 	
@@ -30,7 +31,6 @@ class ActionEvent extends Model {
 	// 3 args = name, key, value
 	// 4 args = name, key, value, extra
 	public function logAction($action_name, $meta_key = null, $meta_value = null, $extra = null){
-		// TODO =--- this->save();
 		
 		if(func_num_args() == 2){
 			$meta_value = $meta_key;
@@ -43,6 +43,11 @@ class ActionEvent extends Model {
 		
 		if(is_array($meta_value)){
 			$meta_value = json_encode($meta_value);
+		}
+		
+		// TODO: userResolver
+		if(Auth::check()){
+			$this->user_id = Auth::user()->id;
 		}
 		
 		$this->action_name = $action_name;
