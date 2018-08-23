@@ -1,0 +1,14 @@
+{
+    "name": "ctbuh/laravel-action-log",
+    "description": "Tracks actions",
+    "type": "library",
+    "license": "MIT",
+	"autoload": {
+		"psr-4": {
+			"ctbuh\\ActionLog\\": ""
+		},
+		"files": [
+			"helpers.php"
+		]
+	}
+}
