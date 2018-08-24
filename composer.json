@@ -5,10 +5,10 @@
     "license": "MIT",
 	"autoload": {
 		"psr-4": {
-			"ctbuh\\ActionLog\\": ""
+			"ctbuh\\ActionLog\\": "src"
 		},
 		"files": [
-			"helpers.php"
+			"src/helpers.php"
 		]
 	}
 }
