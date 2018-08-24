@@ -35,6 +35,7 @@ class ActionEvent extends Model {
 		
 		if(func_num_args() == 2){
 			$meta_value = $meta_key;
+			$meta_key = null; // otherwise key & value is repeated twice
 		}
 		
 		if(is_array($meta_value)){
