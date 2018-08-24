@@ -37,13 +37,12 @@ class ActionEvent extends Model {
 			$meta_value = $meta_key;
 		}
 		
-		// avoid auto attribute casting to support Laravel 4
-		if(method_exists($meta_value, 'toArray')){
-			$meta_value = $meta_value->toArray();
-		}
-		
 		if(is_array($meta_value)){
 			$meta_value = json_encode($meta_value);
+		}
+		
+		if(is_array($extra)){
+			$extra = json_encode($extra);
 		}
 		
 		// TODO: userResolver
@@ -54,7 +53,7 @@ class ActionEvent extends Model {
 		$this->action_name = $action_name;
 		$this->meta_key = $meta_key;
 		$this->meta_value = $meta_value;
-		//$this->extra = $extra;
+		$this->extra = $extra;
 		$this->save();
 	}
 	
