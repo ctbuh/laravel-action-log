@@ -3,7 +3,8 @@
 namespace ctbuh\ActionLog;
 
 use Illuminate\Database\Eloquent\Model;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class ActionEvent extends Model {
 	
@@ -15,7 +16,7 @@ class ActionEvent extends Model {
 	}
 	
 	public function user(){
-		return $this->belongsTo(config('action_log.user_model'), 'user_id');
+		return $this->belongsTo(Config::get('action_log.user_model'), 'user_id');
 	}
 	
 	public function subject(){
@@ -53,7 +54,7 @@ class ActionEvent extends Model {
 		$this->action_name = $action_name;
 		$this->meta_key = $meta_key;
 		$this->meta_value = $meta_value;
-		$this->extra = $extra;
+		//$this->extra = $extra;
 		$this->save();
 	}
 	
@@ -63,6 +64,11 @@ class ActionEvent extends Model {
 	
 	public function getExtra($key = null, $default = null){
 		// TODO
+	}
+	
+	// TODO: Config::get('action_log.table')
+	public function getTable(){
+		return parent::getTable();
 	}
 	
 	public function getLabel(){

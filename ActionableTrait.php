@@ -30,6 +30,7 @@ trait ActionableTrait {
 		static::updated(function($model){
 			
 			// TODO: filter()
+			// TODO: config.batch_update = true
 			foreach($model->getDirty() as $key => $value){
 				$before = $model->getOriginal($key);
 				

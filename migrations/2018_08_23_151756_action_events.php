@@ -13,7 +13,7 @@ class ActionEvents extends Migration
      */
     public function up()
     {
-        Schema::table('action_events', function (Blueprint $table) {
+        Schema::create('action_events', function (Blueprint $table) {
 			$table->increments('id');
 			$table->timestamp('created_at');
 			
