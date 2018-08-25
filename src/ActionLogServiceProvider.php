@@ -13,12 +13,12 @@ class ActionLogServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-		
-		if(method_exists($this, 'publishes')){
-			$this->publishes(array(
-				__DIR__.'/migrations/' => database_path('migrations')
-			), 'migrations');
-		}
+
+        if (method_exists($this, 'publishes')) {
+            $this->publishes(array(
+                __DIR__ . '/migrations/' => database_path('migrations')
+            ), 'migrations');
+        }
     }
 
     /**
