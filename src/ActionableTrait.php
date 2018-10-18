@@ -18,12 +18,10 @@ trait ActionableTrait
         }
     }
 
-    protected $excluded_fields = array();
-
     // Eloquent excluded fields
     public function getExcludedFields()
     {
-        return $this->excluded_fields;
+        return !empty($this->excluded_fields) ? $this->excluded_fields : array();
     }
 
     public static function bootActionableTrait()
