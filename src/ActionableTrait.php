@@ -18,6 +18,14 @@ trait ActionableTrait
         }
     }
 
+    protected $excluded_fields = array();
+
+    // Eloquent excluded fields
+    public function getExcludedFields()
+    {
+        return $this->excluded_fields;
+    }
+
     public static function bootActionableTrait()
     {
 
@@ -35,6 +43,12 @@ trait ActionableTrait
             // TODO: filter()
             // TODO: config.batch_update = true
             foreach ($model->getDirty() as $key => $value) {
+                $exclude = $model->getExcludedFields();
+
+                if (in_array($key, $exclude)) {
+                    continue;
+                }
+
                 $before = $model->getOriginal($key);
 
                 // we do not care for '0' to 0 changes
