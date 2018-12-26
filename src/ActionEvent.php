@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\Config;
 
 class ActionEvent extends Model
 {
-
     protected $guarded = array();
     protected $fillable = array('action_name');
+
+    // only available since 5.2
+    protected $casts = array();
 
     public function setUpdatedAt($value)
     {
@@ -20,6 +22,11 @@ class ActionEvent extends Model
     public function user()
     {
         return $this->belongsTo(Config::get('action_log.user_model'), 'user_id');
+    }
+
+    public function userFormatted()
+    {
+        // TODO
     }
 
     public function subject()
@@ -38,7 +45,6 @@ class ActionEvent extends Model
     // 4 args = name, key, value, extra
     public function logAction($action_name, $meta_key = null, $meta_value = null, $extra = null)
     {
-
         if (func_num_args() == 2) {
             $meta_value = $meta_key;
             $meta_key = null; // otherwise key & value is repeated twice
@@ -64,22 +70,32 @@ class ActionEvent extends Model
         $this->save();
     }
 
-    public function getMetaValue($key = null)
+    public function getMetaValue($key, $default = null)
     {
-        // TODO
+        return json_get($this->meta_value, $key, $default);
     }
 
-    public function getExtra($key = null, $default = null)
+    /**
+     * If text stored inside 'extra' field is not a JSON, null will be returned
+     * @param $key
+     * @param null $default
+     * @return mixed|null
+     */
+    public function getExtra($key, $default = null)
     {
-        // TODO
+        return json_get($this->extra, $key, $default);
     }
 
-    // TODO: Config::get('action_log.table')
     public function getTable()
     {
-        return parent::getTable();
+        $custom_table = Config::get('action_log.table');
+        return $custom_table ? $custom_table : parent::getTable();
     }
 
+    /**
+     * To be overwritten
+     * @return string
+     */
     public function getLabel()
     {
         return sprintf('[user] performed [action] on [subject]');

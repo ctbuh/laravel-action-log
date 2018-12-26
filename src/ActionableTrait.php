@@ -2,11 +2,8 @@
 
 namespace ctbuh\ActionLog;
 
-use Illuminate\Database\Eloquent\Model;
-
 trait ActionableTrait
 {
-
     // https://github.com/VentureCraft/revisionable/blob/master/src/Venturecraft/Revisionable/RevisionableTrait.php#L53
     public static function boot()
     {
@@ -39,7 +36,6 @@ trait ActionableTrait
         static::updated(function ($model) {
 
             // TODO: filter()
-            // TODO: config.batch_update = true
             foreach ($model->getDirty() as $key => $value) {
                 $exclude = $model->getExcludedFields();
 
@@ -68,6 +64,5 @@ trait ActionableTrait
                 action_event($model, 'restore');
             });
         }
-
     }
 }
