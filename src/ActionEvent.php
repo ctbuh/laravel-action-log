@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
+/**
+ * Class ActionEvent
+ * @property int user_id
+ * @property int subject_id
+ * @property Model subject
+ * @property string action_name
+ * @property string meta_key
+ * @property string meta_value
+ * @property string extra
+ * @package ctbuh\ActionLog
+ */
 class ActionEvent extends Model
 {
     protected $guarded = array();
@@ -22,11 +33,6 @@ class ActionEvent extends Model
     public function user()
     {
         return $this->belongsTo(Config::get('action_log.user_model'), 'user_id');
-    }
-
-    public function userFormatted()
-    {
-        // TODO
     }
 
     public function subject()
@@ -98,7 +104,7 @@ class ActionEvent extends Model
      */
     public function getLabel()
     {
-        return sprintf('[user] performed [action] on [subject]');
+        return sprintf('User #%s performed Action "%s" on Subject "%s"', $this->user_id, $this->action_name, class_basename($this->subject));
     }
 }
 
