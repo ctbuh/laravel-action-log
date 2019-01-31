@@ -21,7 +21,9 @@ if (!function_exists('json_get')) {
 
     function json_get($json_str, $key, $default = null)
     {
-        $data = json_decode($json_str, true);
+        // otherwise you get json_decode() expects parameter 1 to be string, array given
+        // $data = json_decode($json_str, true);
+        $data = is_array($json_str) ? $json_str : json_decode($json_str, true);
 
         if (!is_array($data) || !array_key_exists($key, $data)) {
             return $default;
