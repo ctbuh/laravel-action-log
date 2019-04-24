@@ -66,7 +66,16 @@ class ActionEvent extends Model
 
         // TODO: userResolver
         if (Auth::check()) {
-            $this->user_id = Auth::user()->id;
+
+            $custom_guard = Config::get('action_log.auth_guard');
+
+            if ($custom_guard) {
+                $user = Auth::guard($custom_guard)->user();
+
+                $this->user_id = data_get($user, 'id');
+            } else {
+                $this->user_id = Auth::user()->id;
+            }
         }
 
         $this->action_name = $action_name;
