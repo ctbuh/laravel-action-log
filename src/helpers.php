@@ -6,7 +6,7 @@ if (!function_exists('action_event')) {
 
     function action_event($subject, $action_name)
     {
-        $event = new ActionEvent();
+        $event = app(ActionEvent::class);
         $event->setSubject($subject);
 
         // hacky
